@@ -11,4 +11,4 @@ console.log("mongoDB connected successfully");
     }
 };
 
-export default connectDB
+export default connectDB;
