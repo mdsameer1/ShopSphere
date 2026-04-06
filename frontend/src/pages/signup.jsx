@@ -11,9 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 
 
@@ -38,14 +39,20 @@ export function Signup() {
     e.preventDefault();
     console.log(formData);
     try {
+      setLoading(true)
       const res=await axios.post(`http://localhost:3000/api/v1/user/register`,formData,{headers:{
         'Content-Type':"application/json"
       }})
       if(res.data.success){
          navigate("/verify")
+         toast.success(res.data.message)
       }
     } catch (error) {
       console.log(error)
+      toast.error(error.response.data.message)
+    }
+    finally{
+      setLoading(false)
     }
   } 
       return (
@@ -123,7 +130,7 @@ export function Signup() {
         </CardContent>
         <CardFooter className="flex-col gap-2">
           <Button onClick={submitHandler} type="submit" className="w-full cursor-pointer hover:bg-pink-600">
-           Signup
+           {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : "Signup"}
           </Button>
           <p className="text-gray-700 text-sm">Already have an account?  <Link to={"/login"} className="hover:underline cursor-pointer text-pink-800">Login</Link></p>
         </CardFooter>
