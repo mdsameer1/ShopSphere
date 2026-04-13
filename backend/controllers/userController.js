@@ -53,7 +53,7 @@ export const verify = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Authorization token is missingor invalid",
       });
@@ -74,7 +74,7 @@ export const verify = async (req, res) => {
         message: "The verification has failed",
       });
     }
-    const user = await User.findById(decode.id);
+    const user = await User.findById(decoded.id);
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -84,11 +84,11 @@ export const verify = async (req, res) => {
     user.token = null;
     user.isVerified = true;
     await user.save();
-    returnres
+    return res
       .status(200)
       .json({ success: true, message: "Email verified successfully" });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });

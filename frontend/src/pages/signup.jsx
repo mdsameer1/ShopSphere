@@ -15,6 +15,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import React from "react";
+
 
 
 
@@ -44,7 +46,7 @@ export function Signup() {
         'Content-Type':"application/json"
       }})
       if(res.data.success){
-         navigate("/verify")
+         navigate("/Verify")
          toast.success(res.data.message)
       }
     } catch (error) {
@@ -130,7 +132,7 @@ export function Signup() {
         </CardContent>
         <CardFooter className="flex-col gap-2">
           <Button onClick={submitHandler} type="submit" className="w-full cursor-pointer hover:bg-pink-600">
-           {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2"/> : "Signup"}
+           {loading ?<> <Loader2 className="h-4 w-4 animate-spin mr-2"/>pleae wait</> : "Signup"}
           </Button>
           <p className="text-gray-700 text-sm">Already have an account?  <Link to={"/login"} className="hover:underline cursor-pointer text-pink-800">Login</Link></p>
         </CardFooter>
